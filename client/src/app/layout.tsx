@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 // import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css";
+import HeaderCPN from "@/components/HeaderCPN";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -34,13 +35,15 @@ export default function RootLayout({
         className={`${inter.className}`}
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}  
       >
-        <header>header</header>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
+
+            <HeaderCPN />
+
             {children}
           </ThemeProvider>
       </body>

@@ -7,7 +7,6 @@ export default function LoginLayout({
   }>) {
     return (
         <div>
-            <ModeToggle></ModeToggle>
             <h1 style={{color: 'red'}}>login</h1>
             {children}
         </div>
