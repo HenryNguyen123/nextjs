@@ -76,9 +76,8 @@ export default function RegisterForm() {
     
     return (
         <>
-            <div>
                 <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit, (error)=> {console.log(error)})} className="space-y-2 max-w-[600px] flex-shrink-0 w-full">
+                <form onSubmit={form.handleSubmit(onSubmit, (error)=> {console.log(error)})} className="space-y-2 max-w-[600px]">
                     <FormField
                         control={form.control}
                         name="name"
@@ -134,7 +133,6 @@ export default function RegisterForm() {
                     <Button type="submit" className="!mt-8 w-full">Submit</Button>
                 </form>
                 </Form>
-            </div>
         </>
     )
 }

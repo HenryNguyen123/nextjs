@@ -8,7 +8,7 @@ export default function redister() {
     
     return (
         <>  <h1 className="text-xl font-semibold text-center">Đăng ký</h1>
-            <div className="flex justify-center">
+            <div className="max-w-[600px]" style={{margin: '0px auto'}}>
                 <RegisterForm />
             </div>
             <div><Link href={'/'}>Trang chủ</Link></div>
