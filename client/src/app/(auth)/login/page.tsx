@@ -5,6 +5,7 @@ export default function login() {
         <>
             <div><Link href={'/'}>Home</Link></div>
             <div>login</div>
+            <div><Link href={'/register'}>Nhấn để đăng ký</Link></div>
         
         
         </>

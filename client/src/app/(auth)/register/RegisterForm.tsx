@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { error } from "console"
+import envConfig from "@/config"
+import { useEffect } from "react"
+// import envConfig from "@/config"
 
 // const formSchema = z.object({
 //   name: z.string().min(2).max(50),
@@ -42,7 +45,6 @@ export default function RegisterForm() {
 
     type formValues = z.infer<typeof registerBody>
 
-    console.log(process.env.NEXT_PUBLIC_API_ENDPOINT)
 
     // 1. Define your form.
     const form = useForm<formValues>({
@@ -54,12 +56,22 @@ export default function RegisterForm() {
         confirmPassword: '',
         },
     })
-    
+    // console.log(envConfig.NEXT_PUBLIC_API_ENDPOINT + ' ket qua')
+
     // 2. Define a submit handler.
-    function onSubmit(values: formValues) {
+    async function onSubmit(values: formValues) {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        // console.log(values)
+        // console.log(process.env.NEXT_PUBLIC_API_ENDPOINT + '  envConfig.NEXT_PUBLIC_API_ENDPOINT')
+        const result = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/register`,{
+            body: JSON.stringify(values),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        }).then((res) => res.json())
+        console.log(result)
     }
     
     return (
