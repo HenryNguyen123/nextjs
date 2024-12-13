@@ -16,10 +16,13 @@ import {
 import { Input } from "@/components/ui/input"
 import envConfig from "@/config"
 import { Result } from "postcss"
+import { useToast } from "@/hooks/use-toast"
 
 
 
 export default function LoginFrom() {
+
+    const { toast } = useToast()
 
     const formSchema = z.object({
         email: z.string().min(2).max(50),
@@ -38,14 +41,51 @@ export default function LoginFrom() {
     async function onSubmit(values: z.infer<typeof formSchema>) {
       // Do something with the form values.
       // ✅ This will be type-safe and validated.
-      const result = await fetch(`${envConfig.NEXT_PUBLIC_API_ENDPOINT}/auth/login`, {
-        body: JSON.stringify(values),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST'
-        }).then((res) => res.json())
-        console.log(result)
+      try {
+        const result = await fetch(`${envConfig.NEXT_PUBLIC_API_ENDPOINT}/auth/login`, {
+            body: JSON.stringify(values),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+            }).then(async (res) => {
+                const payload = await res.json()
+                const  data = {
+                    status: res.status,
+                    payload
+                }
+                if (!res.ok) {
+                    throw data
+                }
+                return data
+            })
+            toast({
+                description: result.payload.message,
+            })
+            console.log(result)
+      } catch (error: any) {
+        const errors = error.payload.errors as {
+            field: string
+            message: string
+        } []
+        const status = error.status as number
+        if (status === 422) {
+            errors.forEach((error) => {
+                form.setError(error.field as ('email' | 'password') , {
+                    type: 'server',
+                    message: error.message
+                })
+            });
+        } else {
+            toast({
+                title: "Lỗi",
+                description: error.payload.message,
+                variant:  "destructive"
+              })
+        }
+      }
+
+     
     }
 
 
